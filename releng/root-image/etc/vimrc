@@ -1,0 +1,239 @@
+syntax on
+
+" set langmenu=en_US.UTF-8
+
+" Use Esc in normal mode to clean up the search highlights and clear all other
+" possible messages, silently!
+" NOTE! this does not work without hickups!
+"nnoremap <silent> <Esc> :noh<CR>:echo<CR><Esc>
+
+" OPTIONAL: the default '\' leader is too hard to reach.
+" First "unmap" it though
+map <Space> <Nop>
+let mapleader = " "
+
+" Add removing of search highlights to the <C-l>-key
+nnoremap <silent> <C-L> :noh<CR><C-L>
+map <leader>l <C-L>
+
+" Big y yanks from cursor until the end of the line
+map Y y$
+
+"let vim_path = substitute(system('which vim'), "\n", "", "")
+let vim_path = "foo"
+
+" overwrite the standard vi behavior and allow the backspace key to erase
+" previously entered characters, autoindent, and newline
+set backspace=indent,eol,start
+
+" -----------LATEX-VIM-required lines------------
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: set a default prefered colorscheme and enable syntax highlightning
+colorscheme relaxedgreen
+syntax on
+" good colorschemes (atleast for perl):
+" kellys, no_quarter, zenburn
+"colorscheme peachpuff
+
+"This doesn't work, would be nice to have filetype specific
+"colorschemes....
+"autocmd FileType xml,xsl,dtd,xsl colorscheme peachpuff
+
+" Don't use tab at all! Will be replaced with spaces instead
+set expandtab
+
+" Leave cursor where it was
+set nostartofline
+
+" Show line numbers
+set number
+
+" Show search highlights
+set hlsearch
+
+" For searches, ignore case if the search term is all small characters, but take
+" it into account when there is even one capital character in the search.
+set ignorecase
+set smartcase
+
+" -------------------Java-------------------
+" For Java anonymous classes
+set autoindent
+set si
+set shiftwidth=4 " 2 would be better, but there are stupid other idiots!
+set tabstop=4 " 2 would be better, but there are stupid other idiots!
+set cinoptions+=j1
+let java_comment_strings=1
+let java_highlight_java_lang_ids=1
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+" OPTIONAL: For terminal vim with taglist plugin, set window size to fixed
+let Tlist_Inc_Winwidth=0
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+  \| exe "normal g'\"" | endif
+endif
+
+" IMPORTANT: enable use of :make with python
+" The makeprg, optional, if a Makefile exist
+" The error format, optionally use set efm += ..., FIXME: does not work,
+" efm seems to be wrongly parsed, dependant on python version..?
+"autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+autocmd BufRead *.py nmap <F5> :!python %<CR>
+
+" IMPORTANT: set a pr0n status line, this is too pr0n...
+:set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v]
+:set laststatus=2
+
+" OPTIONAL: switch between .hh and .cc file quickly
+" only works if the pathstructure is sameDir/inc/*.hh, sameDir/src/*.cc
+map <leader>h :e %:p:s,.hh$,.X123X,:s,.cc$,.hh,:s,.X123X$,.cc,:s?inc?X123X?:s?src?inc?:s?X123X?src?<CR>
+
+" OPTIONAL: make using multiple buffers a bit easier
+" with this we don't need to type :ls and then :b <nmb-only_one_left_to_type>
+" and toggle/Switch between two most recently accessed buffers
+map <leader>a :buffers<CR>:buffer<Space>
+map <leader>s :b#<CR>
+
+" IMPORTANT: omnicppcomplete needs this
+set nocp
+filetype plugin on
+
+" OPTIONAL: omnicppcomplete works like a charm with TAB with this function
+" TAB will always(?) have the desired behaviour e.g completion, next etc.
+" NOTE: SuperCleverTab function does not work that good, pressing TAB
+" repeatedly would ideally scroll thru the list, but instead selects the first
+" one, how to fix it?
+set completeopt=menu
+function! SuperCleverTab()
+    if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
+        return "\<Tab>"
+    else
+        if &omnifunc != ''
+            return "\<C-X>\<C-O>"
+        elseif &dictionary != ''
+            return "\<C-K>"
+        else
+            return "\<C-N>"
+        endif
+    endif
+endfunction
+inoremap <Tab> <C-R>=SuperCleverTab()<cr>
+let OmniCpp_ShowScopeInAbbr=1
+
+" OPTIONAL: NERDTree settings
+map <leader>n :NERDTreeToggle<CR>
+let g:NERDTreeWinSize=40
+" NERDTree default colors are annoying, how to change?
+
+" OPTIONAL: smart wildcarding bufferswitching with case insensitive filenames
+" this does not work, as advertised, how to accomplish it?
+" NOTE: this needs vim >= 7.3.072
+"set wildignorecase
+
+" OPTIONAL: wildmenu is nice, shows possible completions with <TAB>, and
+" list:longest makes completion happen only until the point of ambiguity
+"set wildmode=list:longest "this also affects buffer switching, which is awful
+
+"OPTIONAL: as 'x will jump to line with mark x, and `x to the line AND column
+" of mark x, the `x is usually what one wants, so let's switch them
+nnoremap ' `
+nnoremap ` '
+
+"OPTIONAL: default history size is 20, bigger is better for searches, replaces
+" etc, that easily may be want to be reached futher back then that
+set history=1000
+
+"OPTIONAL: The % key will switch between opening and closing brackets. By sourcing
+"matchit.vim, it can also switch among e.g. if/elsif/else/end, between opening
+"and closing XML tags, and more. runtime is the same as source, but relative
+"to vim installation directory
+runtime macros/matchit.vim
+
+"OPTIONAL: starting to scroll when 3 lines from beginning/end of window
+" viewport makes more sense, then to start scroll only after reaching it
+set scrolloff=3
+
+"OPTIONAL: faster viewport scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+"OPTIONAL: it is nice to see tabs and eol spaces sometimes, map a key for it
+"set listchars=tab:>-,trail:·,eol:$
+nmap <silent> <leader>f :set nolist!<CR>
+
+"OPTIONAL: Ignore these files when completing names and in Explorer
+set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
+
+"OPTIONAL: Allow switching buffers without writing to disk, which will enable:
+" - The current buffer can be put to the background without writing to disk;
+" - When a background buffer becomes current again, marks and undo-history are remembered.
+"
+" This is disabled for now, because leaving a bunch of open buffers in background is not
+" always that nice, especially incase of a computer/session crash
+"set hidden
+
+"OPTIONAL: <C-w> for accessing window features is very carpeltunnel syndrom
+"friendly, so make it easier
+nnoremap <leader>w <C-w>
+
+"OPTIONAL: Get rid of control-key, dedicate keys for moving
+nnoremap f <C-D>
+nnoremap s <C-U>
+
+
+" OPTIONAL: Accessing tags is difficult with Fin keyboard layout
+map <leader>j <C-]><Esc>
+map <leader>k <C-T><Esc>
+
+"OPTIONAL: enable cscope mappings by default, but it will replace ctags
+" mappings, so:
+" TODO: only enable if $CSCOPE_DB file exists, or some other special case
+"let g:CscopeDisabled=1
+
+"OPTIONAL: vim's multiple clipboards are great, but they should be easier to
+" access, so hide the most typical usage behind a map
+map <leader>p :reg<CR>
+
+"OPTIONAL: highlight rows greater than 79 characters
+"TODO: make toggleable
+"augroup vimrc_autocmds
+"    autocmd BufEnter * highlight OverLength ctermbg=52 guibg=#333333
+"    autocmd BufEnter * match OverLength /\%79v.*/
+"augroup END
+
+"IMPORTANT: enable pathogen, for managing plugins
+call pathogen#infect()
+
+"OPTIONAL: Gitv will truncate linex
+let g:Gitv_TruncateCommitSubjects=1
+
+"OPTIONAL: For writing work, automatic textwidth and spelling
+"set tw=79
+"set fo+=t
+"set spell
+
+"OPTIONAL: Toggle task done/undone with 'vim-task' plugin
+noremap <silent> <buffer> <leader>t :call Toggle_task_status()<CR>
