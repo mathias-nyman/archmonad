@@ -58,6 +58,21 @@ wvdial
 xl2tpd
 zd1211-firmware
 zsh
+xorg-server
+xorg-server-utils
+xorg-xinit
+xmonad
+xmonad-contrib
+xmobar
+autocutsel
+xcompmgr
+dmenu
+feh
+trayer
+xfce4-power-manager
+networkmanager
+network-manager-applet
+xterm
 wpa_supplicant
 ctags
 vim
@@ -82,5 +97,4 @@ macchanger
 nbtscan
 nethogs
 proxychains
-
 blackarch
