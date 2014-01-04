@@ -62,4 +62,6 @@ vim
 rsync
 ncrack
 gem
+wireshark-cli
+wireshark-gtk
 blackarch
