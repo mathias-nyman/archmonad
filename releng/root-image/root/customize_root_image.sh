@@ -36,3 +36,6 @@ done
 sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
 systemctl enable sshd.service
 
+# Fetch OpenVAS plugins
+openvas-nvt-sync
+
