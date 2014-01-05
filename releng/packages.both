@@ -59,6 +59,10 @@ xl2tpd
 zd1211-firmware
 zsh
 ttf-dejavu
+evince
+zathura
+firefox
+gnome-keyring
 xorg-server
 xorg-server-utils
 xorg-xinit
