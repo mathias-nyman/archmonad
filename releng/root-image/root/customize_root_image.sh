@@ -21,9 +21,14 @@ sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
 
 systemctl enable multi-user.target pacman-init.service choose-mirror.service
 
+# Replace dhcpcd with NetworkManager
+systemctl disable dhcpcd.service
+systemctl enable NetworkManager.service
+
 # Copy files over to home
 for user in root $USER
 do
     su -c "git clone --recursive https://github.com/mathias-nyman/dotfiles.git ~$user/dotfiles" $user
     su -c "cd ~$user/dotfiles && ./install.sh force" $user
 done
+
