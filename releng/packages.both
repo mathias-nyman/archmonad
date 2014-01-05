@@ -61,6 +61,7 @@ zsh
 xorg-server
 xorg-server-utils
 xorg-xinit
+xorg-drivers
 xmonad
 xmonad-contrib
 xmobar
