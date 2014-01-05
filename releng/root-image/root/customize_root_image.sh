@@ -32,3 +32,7 @@ do
     su -c "cd ~$user/dotfiles && ./install.sh force" $user
 done
 
+# Enable ssh server
+sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+systemctl enable sshd.service
+
