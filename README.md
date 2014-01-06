@@ -1,18 +1,9 @@
 Overview
 ===
-This is a custom archiso which contains blackarch (http://www.blackarch.org/) and other goodies.
-Dotfiles from https://github.com/mathias-nyman/dotfiles make up the core of the desktop enviornment.
+This is a custom archiso which contains XMonad and other goodies.
+Dotfiles from https://github.com/mathias-nyman/dotfiles make up the core of the "desktop enviornment".
 
-Build
-===
-Some 30gb of disk space is needed for the build.
-The following addition is needed in /etc/pacman.conf on the build machine:
-
-    [blackarch]
-    SigLevel = Optional TrustAll
-    Server = http://blackarch.org/blackarch/$repo/os/$arch
-
-Need to know
+Good to know
 ===
 Need to know:
 * User *root* has password *root*
@@ -21,6 +12,6 @@ Need to know:
 
 So the first thing to do is log in as *root* at console and set a password for *arch* and remove the password for *root*, to even disable console log in for *root*.
 
-Dependencies
+Buidling
 ===
-Archiso
+You will need an Arch Linux system with at least *archiso* package installed.
