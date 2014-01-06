@@ -62,6 +62,8 @@ ttf-dejavu
 evince
 zathura
 firefox
+htop
+mlocate
 gnome-keyring
 xorg-server
 xorg-server-utils
