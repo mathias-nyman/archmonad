@@ -78,6 +78,8 @@ make_setup_mkinitcpio() {
 # Customize installation (root-image)
 make_customize_root_image() {
     cp -af ${script_path}/root-image ${work_dir}/${arch}
+    ${script_path}/fix-fileperms.sh ${script_path}/root-image ${work_dir}/${arch}/root-image
+    chmod a+x ${work_dir}/${arch}/root-image/root/customize_root_image.sh
 
     curl -o ${work_dir}/${arch}/root-image/etc/pacman.d/mirrorlist 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&use_mirror_status=on'
 
