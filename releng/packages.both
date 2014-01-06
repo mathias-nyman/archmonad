@@ -64,6 +64,7 @@ zathura
 firefox
 htop
 mlocate
+git
 gnome-keyring
 xorg-server
 xorg-server-utils
