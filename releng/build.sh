@@ -78,6 +78,11 @@ make_setup_mkinitcpio() {
 # Customize installation (root-image)
 make_customize_root_image() {
     cp -af ${script_path}/root-image ${work_dir}/${arch}
+
+    # Add same pacman.conf as used for building
+    cp -af ${pacman_conf}.${arch} ${work_dir}/${arch}/root-image/etc/pacman.conf
+
+    # Fix file permissions
     ${script_path}/fix-fileperms.sh ${script_path}/root-image ${work_dir}/${arch}/root-image
     chmod a+x ${work_dir}/${arch}/root-image/root/customize_root_image.sh
 
